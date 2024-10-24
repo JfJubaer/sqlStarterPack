@@ -58,5 +58,31 @@ username = 1;
 
 insert into
     man (username, age, email)
-values ( 3,24, 'ass@gmail.com');
+values 
+( 3,24, 'ass@gmail.com'),
+( 4,254, 'ass@gmail.com'),
+( 5,244, 'ass@gmail.com'),
+( 6,243, 'asfs@gmail.com'),
+( 7,2435, 'ascs@gmail.com'),
+( 8,242, 'ascs@gmail.com'),
+( 9,2455, 'asfs@gmail.com')
+;
 
+DELETE from man WHERE username = 3;
+
+SELECT DISTINCT email from man;
+SELECT * from man
+WHERE username <> 4;
+
+SELECT * from man 
+order BY age 
+DESC LIMIT 5 OFFSET 1;
+
+SELECT * from man;
+
+SELECT * from man 
+where age IN (20,24);
+SELECT * from man 
+where age BETWEEN 20 and 24;
+SELECT * from man 
+where username LIKE '__f%';
