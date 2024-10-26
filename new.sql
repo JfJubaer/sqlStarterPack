@@ -1,3 +1,4 @@
+-- Active: 1729435694436@@127.0.0.1@5432@test2
 -- create DATABASE test3;
 -- create table man(
 --     userName SERIAL PRIMARY KEY,
@@ -85,4 +86,38 @@ where age IN (20,24);
 SELECT * from man 
 where age BETWEEN 20 and 24;
 SELECT * from man 
-where username LIKE '__f%';
+where email LIKE '__f%';
+SELECT * from student;
+select * from man;
+insert into student (name,age,father)
+VALUES
+('sun',20,1),
+('sunjid',21,1),
+('sunK',10,3),
+('sunju',26,3);
+
+SELECT * FROM student;
+
+SELECT * from student
+INNER JOIN man ON
+student.father=man.username;
+SELECT * from student
+FULL JOIN man ON
+student.father=man.username;
+SELECT * from student
+NATURAL JOIN man ;
+SELECT * from student
+CROSS JOIN man ;
+
+SELECT n.username, AVG(s.age),SUM(s.age) AS average_age
+FROM man AS n
+FULL JOIN student AS s ON s.father = n.username
+GROUP BY n.username;
+
+SELECT n.username, AVG(s.age),SUM(s.age) AS average_age
+FROM man AS n
+FULL JOIN student AS s ON s.father = n.username
+GROUP BY n.username having AVG(s.age) > 18;
+
+
+select avg(age) from man;
