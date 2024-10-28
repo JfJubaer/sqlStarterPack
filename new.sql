@@ -1,4 +1,4 @@
--- Active: 1729435694436@@127.0.0.1@5432@test2
+-- Active: 1729435694436@@127.0.0.1@5432@task
 -- create DATABASE test3;
 -- create table man(
 --     userName SERIAL PRIMARY KEY,
@@ -121,3 +121,79 @@ GROUP BY n.username having AVG(s.age) > 18;
 
 
 select avg(age) from man;
+
+SELECT email,avg(man.age) from man GROUP BY man.email;
+
+SELECT username,avgAge from(
+    SELECT username,AVG(man.age) as avgAge from man GROUP BY man.username
+) as manTab;
+SELECT username,(SELECT avg(age) from man)from man;
+
+create view viewMan as
+SELECT username,(SELECT avg(age) from man)from man;
+
+CREATE TABLE pricelist_ (
+    Id_ SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    basePrice FLOAT8 NOT NULL,
+    finalPrice FLOAT8
+);
+
+SELECT * FROM pricelist_;
+
+insert INTO pricelist_(title,basePrice) VALUES('banana',70)
+
+
+CREATE OR REPLACE TRIGGER addTax 
+AFTER 
+INSERT ON pricelist_ 
+FOR EACH ROW 
+EXECUTE FUNCTION addFinalList();
+
+CREATE OR REPLACE FUNCTION addFinalList()
+RETURNS TRIGGER
+LANGUAGE plpgsql 
+AS $$
+  BEGIN 
+    NEW.finalPrice :=NEW.basePrice*1.5;
+    RETURN NEW;
+  END;
+$$;
+
+
+
+
+CREATE TABLE products(
+    Id_ SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    basePrice FLOAT8 NOT NULL,
+    finalPrice FLOAT8
+);
+
+SELECT * FROM products;
+
+insert INTO 
+products(title,basePrice) 
+VALUES('banana',70);
+
+
+CREATE OR REPLACE TRIGGER addTax 
+AFTER 
+INSERT ON products
+for each row
+EXECUTE FUNCTION addFinalListNew();
+
+CREATE OR REPLACE FUNCTION addFinalListNew()
+RETURNS TRIGGER
+LANGUAGE plpgsql 
+AS $$
+  BEGIN 
+    NEW.finalPrice := NEW.basePrice*1.5;
+    RETURN NEW;
+  END;
+$$;
+
+
+
+
+
